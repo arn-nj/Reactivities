@@ -1,0 +1,12 @@
+body {
+  background-color: black !important;
+  color: #aaa;
+}
+
+.segment{
+  background-color: blanchedalmond;
+}
+
+.ui.inverted.top.fixed.menu {
+  background-image: linear-gradient(135deg,rgb(24,33,115) 0%, rgb(70, 38, 130) 63%, rgb(100,50,80)) !important;
+}
