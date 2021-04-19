@@ -1,33 +1,30 @@
-import { useEffect } from "react";
-import { Button, Container, StepTitle } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import NavBar from "./NavBar";
 import ActivitiesDashboard from "../../features/activities/dashboard/ActivitiesDashboard";
-import LoadingComponent from "./LoadingComponent";
-import useStore from "../stores/store";
 import { observer } from "mobx-react-lite";
+import { Route } from "react-router";
+import HomePage from "./HomePage";
+import ActivityDetails from "../../features/activities/details/ActivityDetails";
+import ActivityForm from "../../features/activities/form/ActivityForm";
 
 function App() {
-  const {activityStore} = useStore();
-
-
-
-  useEffect(() => {
-     activityStore.loadActivities();
-  }, [activityStore]);
-
-
-  if(activityStore.initialLoading) return (<LoadingComponent content="App Loading"  />);
 
   return (
     <>
-      <NavBar/>
-      <Container style={{ marginTop: "7em" }}>
-      <StepTitle as="h1" content={activityStore.title} />
-      <Button onClick={()=>activityStore.setTitle("Hello User")} primary>Show Welcome Message</Button>
-      <br/>
-      <br/>
-        <ActivitiesDashboard />
-      </Container>
+      <Route path='/' exact component={HomePage} />
+
+      <Route path='/(.+)' render= {() =>  (
+        <>
+        <NavBar/>
+        <Container style={{ marginTop: "7em" }}>
+          <Route exact path='/activities'  component={ActivitiesDashboard} />
+          <Route  exact path='/activities/:id' component={ActivityDetails} />
+          <Route  path={['/activities/manage/:id', '/activity/new']} component={ActivityForm} />
+        </Container>
+        </>
+      )} />
+        
+      
     </>
   );
 }
